@@ -157,7 +157,7 @@ document.getElementById('comb').addEventListener('click', combButton);
 document.getElementById('selection').addEventListener('click', selectionButton);
 document.getElementById('insertion').addEventListener('click', insertionButton);
 document.getElementById('binaryInsertion').addEventListener('click', binaryInsertionButton);
-document.getElementById('reset').addEventListener('click', initCanvas);
+document.getElementById('reset').addEventListener('click', init);
 document.getElementById('test').addEventListener('click', testButton);
 
 // 設定
