@@ -60,7 +60,10 @@ function rotateRight(arr, pos, size) {
   arr[pos] = tmp;
 }
 
-function median(a, b ,c) {
+function median(arr, x, y ,z) {
+  var a = arr[x];
+  var b = arr[y];
+  var c = arr[z];
   if (a < b && a < c) { 
     if (b < c) {
       return b;
@@ -97,6 +100,29 @@ function expression(i) {
 
   // 音を変える
   audio.oscillator.frequency.value = (i / ARRAY_NUM) * MAXFREQ;
+}
+
+function median(a, b, c) {
+  if (a < b && a < c) {
+    if (b < c) {
+      return b;
+    } else {
+      return c;
+    }
+  } else if (b < a && b < c) {
+    if (a < c) {
+      return a;
+    } else {
+      return c;
+    }
+  } else if (c < a && c < b) {
+    if (a < b) {
+      return a;
+    } else {
+      return b;
+    }
+  }
+  return -1;
 }
 
 /**********************************************************
@@ -152,6 +178,7 @@ document.addEventListener('DOMContentLoaded', init);
 document.getElementById('bubble').addEventListener('click', bubbleButton);
 document.getElementById('shaker').addEventListener('click', shakerButton);
 document.getElementById('quick').addEventListener('click', quickButton);
+document.getElementById('improved quick').addEventListener('click', improedQuickButton);
 document.getElementById('merge').addEventListener('click', mergeButton);
 document.getElementById('comb').addEventListener('click', combButton);
 document.getElementById('selection').addEventListener('click', selectionButton);
@@ -284,6 +311,53 @@ function quickButton() {
   audio.gainNode.connect(audio.context.destination);
   quickId = setInterval(() => {
     var current = quick.next();
+    expression(current.value);
+  }, INTERVAL);
+}
+
+/**********************************************************
+ * Improved Quick Sort
+ **********************************************************/
+function* improvedQuickSort(arr, low, up, depth) {
+  if (up - low < 2) {
+    return;
+  }
+
+  var p = median(arr, low, Math.floor((up - low) / 2 + low), up - 1);
+
+  var i = low, j = up - 1;
+  while (true) {
+    for (; i < up; ++i) {
+      if (arr[i] >= p) break;
+      yield i;
+    }
+    for (; j >= low; --j) {
+      if (arr[j] <= p) break;
+      yield j;
+    }
+    if (i < j) {
+      swap(arr, i, j);
+      ++i; --j;
+    } else {
+      break;
+    }
+  }
+  yield* improvedQuickSort(arr, low, i, depth + 1);
+  yield* improvedQuickSort(arr, i, up, depth + 1);
+  if (depth === 0) {
+    audio.gainNode.disconnect(audio.context.destination);
+    console.timeEnd('improvedQuick');
+    clearInterval(improvedQuickId);
+  }
+}
+
+function improvedQuickButton() {
+  sortingArray = INPUT_ARRAY.slice(0);
+  console.time('improvedQuick');
+  var improvedQuick = improvedQuickSort(sortingArray, 0, sortingArray.length, 0);
+  audio.gainNode.connect(audio.context.destination);
+  improvedQuickId = setInterval(() => {
+    var current = improvedQuick.next();
     expression(current.value);
   }, INTERVAL);
 }
