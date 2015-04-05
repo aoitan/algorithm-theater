@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', init);
 document.getElementById('bubble').addEventListener('click', bubbleButton);
 document.getElementById('shaker').addEventListener('click', shakerButton);
 document.getElementById('quick').addEventListener('click', quickButton);
-document.getElementById('improved quick').addEventListener('click', improedQuickButton);
+document.getElementById('improvedQuick').addEventListener('click', improvedQuickButton);
 document.getElementById('merge').addEventListener('click', mergeButton);
 document.getElementById('comb').addEventListener('click', combButton);
 document.getElementById('selection').addEventListener('click', selectionButton);
