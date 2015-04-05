@@ -60,23 +60,24 @@ function rotateRight(arr, pos, size) {
   arr[pos] = tmp;
 }
 
-function median(arr, x, y ,z) {
+function median(arr, x, y, z) {
   var a = arr[x];
   var b = arr[y];
   var c = arr[z];
-  if (a < b && a < c) { 
+
+  if (a <= b && a <= c) { 
     if (b < c) {
       return b;
     } else {
       return c;
     }
-  } else if (b < a && b < c) {
+  } else if (b <= a && b <= c) {
     if (a < c) {
       return a;
     } else {
       return c;
     }
-  } else if (c < a && c < b) {
+  } else if (c <= a && c <= b) {
     if (a < c) {
       return a;
     } else {
@@ -100,29 +101,6 @@ function expression(i) {
 
   // 音を変える
   audio.oscillator.frequency.value = (i / ARRAY_NUM) * MAXFREQ;
-}
-
-function median(a, b, c) {
-  if (a < b && a < c) {
-    if (b < c) {
-      return b;
-    } else {
-      return c;
-    }
-  } else if (b < a && b < c) {
-    if (a < c) {
-      return a;
-    } else {
-      return c;
-    }
-  } else if (c < a && c < b) {
-    if (a < b) {
-      return a;
-    } else {
-      return b;
-    }
-  }
-  return -1;
 }
 
 /**********************************************************
@@ -323,7 +301,8 @@ function* improvedQuickSort(arr, low, up, depth) {
     return;
   }
 
-  var p = median(arr, low, Math.floor((up - low) / 2 + low), up - 1);
+  var mid = Math.floor((up - low) / 2 + low);
+  var p = median(arr, low, mid, up - 1);
 
   var i = low, j = up - 1;
   while (true) {
