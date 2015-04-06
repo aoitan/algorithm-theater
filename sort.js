@@ -8,7 +8,7 @@
 var INPUT_ARRAY = [];
 var sortingArray = [];
 var INTERVAL = 20;
-var ARRAY_NUM = 200;
+var ARRAY_NUM = 100;
 var INITFREQ = 3000;
 var INITVOL = 0.001;
 var MAXFREQ = 6000;
@@ -26,10 +26,11 @@ function draw(arr) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
 
-  var maxHeight = arr.length * 2;
+  var dot = Math.floor(canvas.width / arr.length);
+  var maxHeight = arr.length * dot;
 
   for (var i = 0; i < arr.length; ++i) {
-    ctx.fillRect(i * 2, maxHeight - arr[i] * 2, 2, 2);
+    ctx.fillRect(i * dot, maxHeight - arr[i] * dot, dot, dot);
   }
 }
 
@@ -221,14 +222,22 @@ function bubbleButton() {
 var shakerId;
 function* shakerSort(arr) {
   audio.gainNode.connect(audio.context.destination);
-  for (var s = 0, e = arr.length; s < e; ++s, --e) {
-    for (var j = s; j < e; ++j) {
-      swapif(arr, j - 1, j);
-      yield j;
-    }
-    for (var k = e - 1; k >= s; --k) {
-      swapif(arr, k - 1, k);
-      yield k;
+  var forward = true;
+  for (var s = 0, e = arr.length; s < e;) {
+    if (forward) {
+      for (var j = s; j < e; ++j) {
+        swapif(arr, j - 1, j);
+        yield j;
+      }
+      --e;
+      forward = false;
+    } else {
+      for (var k = e - 1; k >= s; --k) {
+        swapif(arr, k - 1, k);
+        yield k;
+      }
+      ++s;
+      forward = true;
     }
   }
   clearInterval(shakerId);
