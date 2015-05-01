@@ -7,7 +7,7 @@
  **********************************************************/
 var INPUT_ARRAY = [];
 var sortingArray = [];
-var INTERVAL = 20;
+var INTERVAL = 0;
 var ARRAY_NUM = 100;
 var INITFREQ = 3000;
 var INITVOL = 0.001;
@@ -30,7 +30,7 @@ function draw(arr) {
   var maxHeight = arr.length * dot;
 
   for (var i = 0; i < arr.length; ++i) {
-    ctx.fillRect(i * dot, maxHeight - arr[i] * dot, dot, dot);
+    ctx.fillRect(i * dot, maxHeight - arr[i] * dot - dot, dot, dot);
   }
 }
 
@@ -169,6 +169,7 @@ document.getElementById('test').addEventListener('click', testButton);
 // 設定
 document.getElementById('num-select').addEventListener('change', changeNum);
 document.getElementById('num-interval').addEventListener('change', changeInterval);
+document.getElementById('sound-check').addEventListener('change', changeSoundCheck);
 
 /**********************************************************
  * Settings
@@ -182,11 +183,35 @@ function changeInterval(event) {
   INTERVAL = parseInt(event.target.value);
 }
 
+function changeSoundCheck(event) {
+  if (event.target.checked) {
+    audio.gainNode.connect(audio.context.destination);
+  } else {
+    audio.gainNode.disconnect(audio.context.destination);
+  }
+}
+
 /**********************************************************
  * test
  **********************************************************/
 function testButton() {
-  var test = [0, 2, 3, 4, 6, 7, 9];
+  for (var i = 0; i < 10; ++i) {
+    initArray();
+
+    sortingArray = INPUT_ARRAY.slice(0);
+    var quick = quickSort(sortingArray, 0, sortingArray.length, 0);
+    console.time('quick');
+    for (var q in quick) {
+    }
+    console.timeEnd('quick');
+
+    sortingArray = INPUT_ARRAY.slice(0);
+    var improved = improvedQuickSort(sortingArray, 0, sortingArray.length, 0);
+    console.time('improved');
+    for (var iq in improved) {
+    }
+    console.timeEnd('improved');
+  }
 }
 
 /**********************************************************
@@ -194,7 +219,8 @@ function testButton() {
  **********************************************************/
 var bubbleId;
 function* bubbleSort(arr) {
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   for (var l = 0; l < arr.length; ++l) {
     for (var j = 0; j < arr.length - l; ++j) {
       swapif(arr, j - 1, j);
@@ -221,7 +247,8 @@ function bubbleButton() {
  **********************************************************/
 var shakerId;
 function* shakerSort(arr) {
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   var forward = true;
   for (var s = 0, e = arr.length; s < e;) {
     if (forward) {
@@ -295,7 +322,8 @@ function quickButton() {
   sortingArray = INPUT_ARRAY.slice(0);
   console.time('quick');
   var quick = quickSort(sortingArray, 0, sortingArray.length, 0);
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   quickId = setInterval(() => {
     var current = quick.next();
     expression(current.value);
@@ -343,7 +371,8 @@ function improvedQuickButton() {
   sortingArray = INPUT_ARRAY.slice(0);
   console.time('improvedQuick');
   var improvedQuick = improvedQuickSort(sortingArray, 0, sortingArray.length, 0);
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   improvedQuickId = setInterval(() => {
     var current = improvedQuick.next();
     expression(current.value);
@@ -386,7 +415,8 @@ function mergeButton() {
   sortingArray = INPUT_ARRAY.slice(0);
   console.time('merge');
   var merge = mergeSort(sortingArray, 0, sortingArray.length, 0);
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   mergeId = setInterval(() => {
     var current = merge.next();
     expression(current.value);
@@ -427,7 +457,8 @@ function combButton() {
   sortingArray = INPUT_ARRAY.slice(0);
   console.time('comb');
   var comb = combSort(sortingArray);
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   combId = setInterval(() => {
     var current = comb.next();
     expression(current.value);
@@ -458,7 +489,8 @@ function selectionButton() {
   sortingArray = INPUT_ARRAY.slice(0);
   console.time('selection');
   var selection = selectionSort(sortingArray);
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   selectionId = setInterval(() => {
     var current = selection.next();
     expression(current.value);
@@ -491,7 +523,8 @@ function insertionButton() {
   sortingArray = INPUT_ARRAY.slice(0);
   console.time('insertion');
   var insertion = insertionSort(sortingArray);
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   insertionId = setInterval(() => {
     var current = insertion.next();
     expression(current.value);
@@ -540,7 +573,8 @@ function binaryInsertionButton() {
   sortingArray = INPUT_ARRAY.slice(0);
   console.time('binaryInsertion');
   var binaryInsertion = binaryInsertionSort(sortingArray);
-  audio.gainNode.connect(audio.context.destination);
+  var check = document.getElementById('sound-check');
+  if (check.checked) audio.gainNode.connect(audio.context.destination);
   binaryInsertionId = setInterval(() => {
     var current = binaryInsertion.next();
     expression(current.value);

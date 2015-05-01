@@ -7,27 +7,36 @@
 </head>
 <body>
   <section class="display">
-    <canvas id="canvas" width="400px" height="400px"></canvas><br>
+    <canvas id="canvas" width="600px" height="600px"></canvas><br>
   </section>
   <secsion class="settings">
-    <label>num:</label>
-    <select id="num-select">
-      <option value="10">10</option>
-      <option value="20">20</option>
-      <option value="50">50</option>
-      <option value="100" selected>100</option>
-      <option value="200">200</option>
-      <option value="400">400</option>
-    </select>
-    <label>interval:</label>
-    <select id="num-interval">
-      <option value="0">0</option>
-      <option value="10">10</option>
-      <option value="20" selected>20</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
-      <option value="1000">1000</option>
-    </select>
+    <p>
+      <label>num:</label>
+      <select id="num-select">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100" selected>100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value="400">400</option>
+        <option value="600">600</option>
+      </select>
+    </p>
+    <p>
+      <label>interval:</label>
+      <select id="num-interval">
+        <option value="0" selected>0</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="1000">1000</option>
+      </select>
+    </p>
+      <input type="checkbox" id="sound-check">sound</input>
+    <p>
+    </p>
   </section>
   <section class="button">
     <button id="bubble">bubble</button>
