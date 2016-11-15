@@ -1,0 +1,76 @@
+<!DOCUTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="random.js" defer></script>
+  <style>
+    canvas {
+      border: solid 1px;
+    };
+  </style>
+</head>
+<body>
+  <section class="display">
+    <p>
+      <label>scatter:</label><br>
+      <canvas id="scatter" width="600px" height="300px" border="1px"></canvas><br>
+    </p>
+    <p>
+      <label>histgram:</label><br>
+      <canvas id="histgram" width="600px" height="300px" border="1px"></canvas><br>
+    </p>
+  </section>
+  <secsion class="settings">
+    <p>
+      <label>range:</label>
+      <select id="num-select">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100" selected>100</option>
+        <option value="200">200</option>
+        <option value="300">300</option>
+        <option value="400">400</option>
+        <option value="600">600</option>
+      </select>
+    </p>
+    <p>
+      <label>loop:</label>
+      <select id="loop-select">
+        <option value="100">100</option>
+        <option value="200">200</option>
+        <option value="500">500</option>
+        <option value="1000" selected>1000</option>
+        <option value="2000">2000</option>
+        <option value="3000">3000</option>
+        <option value="4000">4000</option>
+        <option value="6000">6000</option>
+      </select>
+    </p>
+    <p>
+      <label>interval:</label>
+      <select id="num-interval">
+        <option value="0" selected>0</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="1000">1000</option>
+      </select>
+    </p>
+  </section>
+  <section class="button">
+    <button id="uniform_1">一様分布一回</button>
+    <button id="uniform_2_ave">一様分布二回平均</button>
+    <button id="uniform_5_ave">一様分布五回平均</button>
+    <button id="uniform_5_sma">一様分布五回単純移動平均</button>
+    <button id="box-muller">ボックス・ミューラー法</button>
+    <button id="sqrt">一様分布の平方根</button>
+    <button id="reset">reset</button>
+    <button id="test">test</button>
+  </section>
+</body>
+</html>
+<!-- vim:set ts=2 sts=2 sw=2: -->
+
