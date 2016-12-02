@@ -46,6 +46,8 @@ function drawScatter(arr, idx) {
   var unitY = canvas.height / RANGE_NUM;
   var dotH = Math.ceil(unitY);
   var maxHeight = canvas.height;
+  ctx.fillStyle = 'rgb(160,' + ((arr[idx] / RANGE_NUM) * 256) + ',160)';
+  ctx.globalAlpha = 0.7;
 
   ctx.fillRect(idx * unitX, maxHeight - arr[idx] * unitY - unitY, dotW, dotH);
 }
@@ -59,6 +61,8 @@ function drawHistgram(arr, idx) {
   var dotW = Math.floor(canvas.width / RANGE_NUM);
   var dotH = Math.floor(canvas.height / RANGE_NUM);
   var maxHeight = canvas.height;
+  ctx.fillStyle = 'rgb(160,' + ((idx / arr.length) * 256) + ',160)';
+  ctx.globalAlpha = 0.7;
 
   ctx.fillRect(idx * dotW, maxHeight - arr[idx] * dotH - dotH, dotW, maxHeight);
 }
@@ -133,7 +137,7 @@ function* uniform1(hist, scat) {
 }
 
 function uniform1Button() {
-    initCanvas();
+    init();
     var uniform1Iter = uniform1(HISTGRAM_ARRAY, SCATTER_ARRAY);
     uniform1Id = setInterval(() => {
         var c = uniform1Iter.next();
@@ -158,7 +162,7 @@ function* uniform2ave(hist, scat) {
 }
 
 function uniform2AveButton() {
-    initCanvas();
+    init();
     var uniform2aveIter = uniform2ave(HISTGRAM_ARRAY, SCATTER_ARRAY);
     uniform2aveId = setInterval(() => {
         var c = uniform2aveIter.next();
@@ -183,7 +187,7 @@ function* uniform5ave(hist, scat) {
 }
 
 function uniform5AveButton() {
-    initCanvas();
+    init();
     var uniform5aveIter = uniform5ave(HISTGRAM_ARRAY, SCATTER_ARRAY);
     uniform5aveId = setInterval(() => {
         var c = uniform5aveIter.next();
@@ -214,7 +218,7 @@ function* uniform5sma(hist, scat) {
 }
 
 function uniform5SmaButton() {
-    initCanvas();
+    init();
     var uniform5smaIter = uniform5sma(HISTGRAM_ARRAY, SCATTER_ARRAY);
     uniform5smaId = setInterval(() => {
         var c = uniform5smaIter.next();
@@ -232,16 +236,24 @@ function* boxMuller(hist, scat) {
   var len = hist.length;
 
   for (var i = 0; i < LOOP_NUM; ++i) {
-      var r = expand(Math.sqrt(-2 * Math.log(1 - Math.random())) * Math.cos(2 * Math.PI * Math.random()), 0, len);
-      hist[r]++;
-      scat[i] = r;
+      var x = 1 - Math.random();
+      var y = 1 - Math.random();
+      var r = -2 * Math.log(x);
+      var sr = Math.sqrt(r);
+      var theta = 2 * Math.PI * y;
+      var cosT = Math.cos(theta);
+      var bm = sr * cosT / Math.PI / 2 + 0.5;
+      var e = expand(bm, 0, len);
+      console.log("x: " + x + ", y: " + y + ", r: " + r + ", sqrt(r): " + sr + ", theta: " + theta + ", cosT: " + cosT + ", bm: " + bm + ", result: " + e);
+      hist[e]++;
+      scat[i] = e;
       yield i;
   }
   clearInterval(boxMullerId);
 }
 
 function boxMullerButton() {
-    initCanvas();
+    init();
     var boxMullerIter = boxMuller(HISTGRAM_ARRAY, SCATTER_ARRAY);
     boxMullerId = setInterval(() => {
         var c = boxMullerIter.next();
@@ -268,7 +280,7 @@ function* sqrt(hist, scat) {
 }
 
 function sqrtButton() {
-    initCanvas();
+    init();
     var sqrtIter = sqrt(HISTGRAM_ARRAY, SCATTER_ARRAY);
     sqrtId = setInterval(() => {
         var c = sqrtIter.next();
