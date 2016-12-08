@@ -58,8 +58,8 @@ function drawHistgram(arr, idx) {
 
   ctx.beginPath();
 
-  var dotW = Math.floor(canvas.width / RANGE_NUM);
-  var dotH = Math.floor(canvas.height / RANGE_NUM);
+  var dotW = Math.ceil(canvas.width / RANGE_NUM);
+  var dotH = Math.ceil(canvas.height / LOOP_NUM);
   var maxHeight = canvas.height;
   ctx.fillStyle = 'rgb(160,' + ((idx / arr.length) * 256) + ',160)';
   ctx.globalAlpha = 0.7;
