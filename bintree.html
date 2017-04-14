@@ -1,0 +1,45 @@
+<!DOCUTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link href="vis-network.min.css" rel="stylesheet" type="text/css">
+  <script src="vis-network.min.js"></script>
+  <script src="bintree.js"></script>
+  <style>
+    #tree {
+      border: solid 1px;
+      width: "600px";
+      height: "600px";
+    };
+  </style>
+</head>
+<body>
+  <secsion class="settings">
+    <p>
+      <label>interval:</label>
+      <select id="num-interval">
+        <option value="0">0</option>
+        <option value="10">10</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+        <option value="1000" selected>1000</option>
+      </select>
+    </p>
+  </section>
+  <section class="input">
+    <input type="number" id="input" name="input">
+    <input type="button" id="btn" name="btn" value="追加">
+  </section>
+  <section class="display">
+    <p>
+      <label>Binary Tree:</label><br>
+      <div id="tree" border="1px"></canvas><br>
+    </p>
+  </section>
+</body>
+</html>
+<!-- vim:set ts=2 sts=2 sw=2: -->
+
+
